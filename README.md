@@ -12,6 +12,10 @@
 
 ## Executive Summary (Recruiter Digest)
 
+![Retail Sales Performance Dashboard Preview](dashboard/dashboard_preview.png)
+
+> 🌐 **Interactive Web Dashboard**: [https://adarshsinha16.github.io/retail-sales-dashboard/](https://adarshsinha16.github.io/retail-sales-dashboard/)
+
 This project analyzes over **10,000 retail transactions** from the Superstore Sales dataset to evaluate revenue drivers, regional performance, customer churn, and profitability dynamics. 
 
 **Key Business Insight**: While overall gross revenue exceeded $18 Million, aggressive promotional discounting above 20% completely erased profit margins in high-end categories (Technology Copiers and Phones), incurring **over $1.55 Million in net losses** on clearance items. Restructuring discount caps to a 20% ceiling and deploying targeted retention campaigns for top-tier enterprise customers recovers an estimated **$1.2 Million in annual net profitability**.
