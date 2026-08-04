@@ -1,10 +1,12 @@
 # Retail Sales Performance Dashboard — End-to-End Analytics Pipeline
 
-[![Data Analytics Pipeline](https://img.shields.io/badge/Pipeline-Python%20%7C%20SQL%20%7C%20PowerBI-blue)](https://github.com/)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-GitHub_Pages-brightgreen)](https://adarshsinha16.github.io/retail-sales-dashboard/)
+[![Data Analytics Pipeline](https://img.shields.io/badge/Pipeline-Python%20%7C%20SQL%20%7C%20PowerBI-blue)](https://github.com/Adarshsinha16/retail-sales-dashboard)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 > **Portfolio Project for Entry-Level Data Analyst Roles**  
-> Demonstrating an end-to-end analytics engineering pipeline: raw data ingestion & cleaning (Python/pandas) → normalized database modeling (SQL Star Schema) → advanced analytical querying (SQL CTEs & Window Functions) → interactive executive dashboarding (Power BI & DAX) → strategic business recommendations.
+> Demonstrating an end-to-end analytics engineering pipeline: raw data ingestion & cleaning (Python/pandas) → normalized database modeling (SQL Star Schema) → advanced analytical querying (SQL CTEs & Window Functions) → interactive executive dashboarding (Power BI & DAX) → strategic business recommendations.  
+> 🌐 **Live Interactive Web Report**: [https://adarshsinha16.github.io/retail-sales-dashboard/](https://adarshsinha16.github.io/retail-sales-dashboard/)
 
 ---
 
