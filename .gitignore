@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Databases (Optional: push schema.sql instead of binary .db files)
+# sales_dashboard.db
+
+# OS Generated
+.DS_Store
+Thumbs.db

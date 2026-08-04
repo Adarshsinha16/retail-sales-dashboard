@@ -1,0 +1,128 @@
+// ============================================================================
+// Phase 3: Power BI Custom DAX Measures Suite
+// Project: Retail Sales Performance Dashboard
+// ============================================================================
+
+// ----------------------------------------------------------------------------
+// 1. BASELINE FINANCIAL & OPERATIONAL MEASURES
+// ----------------------------------------------------------------------------
+
+Total Sales = 
+SUM(fact_orders[sales])
+
+Total Profit = 
+SUM(fact_orders[profit])
+
+Total Orders = 
+DISTINCTCOUNT(fact_orders[order_id])
+
+Total Items Sold = 
+SUM(fact_orders[quantity])
+
+Avg Order Value (AOV) = 
+DIVIDE([Total Sales], [Total Orders], 0)
+
+Profit Margin % = 
+DIVIDE([Total Profit], [Total Sales], 0)
+
+Average Discount % = 
+AVERAGE(fact_orders[discount])
+
+Avg Processing Days = 
+AVERAGE(fact_orders[order_processing_days])
+
+
+// ----------------------------------------------------------------------------
+// 2. TIME INTELLIGENCE & COMPARATIVE GROWTH MEASURES
+// ----------------------------------------------------------------------------
+
+Sales PY (Previous Year) = 
+CALCULATE(
+    [Total Sales],
+    SAMEPERIODLASTYEAR('Dim_Date'[Date])
+)
+
+Profit PY (Previous Year) = 
+CALCULATE(
+    [Total Profit],
+    SAMEPERIODLASTYEAR('Dim_Date'[Date])
+)
+
+YoY Sales Growth % = 
+VAR SalesCurrent = [Total Sales]
+VAR SalesPrevious = [Sales PY (Previous Year)]
+RETURN
+    DIVIDE(SalesCurrent - SalesPrevious, SalesPrevious, 0)
+
+YoY Profit Growth % = 
+VAR ProfitCurrent = [Total Profit]
+VAR ProfitPrevious = [Profit PY (Previous Year)]
+RETURN
+    DIVIDE(ProfitCurrent - ProfitPrevious, ProfitPrevious, 0)
+
+Running Total Sales (YTD) = 
+TOTALYTD([Total Sales], 'Dim_Date'[Date])
+
+Running Total Profit (YTD) = 
+TOTALYTD([Total Profit], 'Dim_Date'[Date])
+
+MoM Sales Growth % = 
+VAR CurrentMonthSales = [Total Sales]
+VAR PreviousMonthSales = CALCULATE([Total Sales], DATEADD('Dim_Date'[Date], -1, MONTH))
+RETURN
+    DIVIDE(CurrentMonthSales - PreviousMonthSales, PreviousMonthSales, 0)
+
+
+// ----------------------------------------------------------------------------
+// 3. CUSTOMER INTELLIGENCE & CHURN MEASURES
+// ----------------------------------------------------------------------------
+
+Total Customers = 
+COUNTROWS(dim_customers)
+
+Active Customers = 
+CALCULATE(
+    DISTINCTCOUNT(fact_orders[customer_id]),
+    ALLSELECTED('Dim_Date')
+)
+
+Days Since Last Purchase = 
+VAR MaxDatasetDate = MAX('Dim_Date'[Date])
+VAR LastCustomerOrderDate = MAX(fact_orders[order_date])
+RETURN
+    DATEDIFF(LastCustomerOrderDate, MaxDatasetDate, DAY)
+
+Churned Customers Count = 
+CALCULATE(
+    COUNTROWS(dim_customers),
+    FILTER(
+        dim_customers,
+        [Days Since Last Purchase] > 180
+    )
+)
+
+Churn Rate % = 
+DIVIDE([Churned Customers Count], [Total Customers], 0)
+
+Avg Customer Lifetime Value (LTV) = 
+DIVIDE([Total Sales], [Total Customers], 0)
+
+
+// ----------------------------------------------------------------------------
+// 4. PRICING SENSITIVITY & LOSS IMPACT MEASURES
+// ----------------------------------------------------------------------------
+
+High Discount Sales (>40%) = 
+CALCULATE(
+    [Total Sales],
+    fact_orders[discount] > 0.4
+)
+
+High Discount Loss = 
+CALCULATE(
+    [Total Profit],
+    fact_orders[discount] > 0.4
+)
+
+Discount Profit Drag % = 
+DIVIDE([High Discount Loss], [Total Profit], 0)
