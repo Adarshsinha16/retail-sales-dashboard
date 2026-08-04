@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retail Sales Performance Dashboard | Portfolio Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-primary: #0f172a;
+            --bg-card: #1e293b;
+            --accent-blue: #38bdf8;
+            --accent-green: #4ade80;
+            --accent-red: #f87171;
+            --accent-purple: #c084fc;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            padding: 2rem;
+        }
+
+        header {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-top: 0.25rem;
+        }
+
+        .badge {
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent-blue);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .kpi-card {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .kpi-title {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .kpi-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-card {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .chart-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .findings-card {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        li strong {
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div>
+            <h1>Retail Sales Performance Dashboard</h1>
+            <div class="subtitle">End-to-End Analytics Pipeline Demonstration | Adarsh Sinha</div>
+        </div>
+        <div class="badge">Live Web Portfolio</div>
+    </header>
+
+    <!-- KPI CARDS -->
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <div class="kpi-title">Total Revenue</div>
+            <div class="kpi-value" style="color: var(--accent-blue);">$18.11M</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-title">Total Profit</div>
+            <div class="kpi-value" style="color: var(--accent-green);">$2.93M</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-title">Profit Margin %</div>
+            <div class="kpi-value">16.18%</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-title">Discount Loss (>40%)</div>
+            <div class="kpi-value" style="color: var(--accent-red);">-$1.55M</div>
+        </div>
+    </div>
+
+    <!-- CHARTS GRID -->
+    <div class="charts-grid">
+        <div class="chart-card">
+            <div class="chart-title">Profit Margin % by Discount Tier</div>
+            <canvas id="discountChart"></canvas>
+        </div>
+        <div class="chart-card">
+            <div class="chart-title">Customer RFM Segment Revenue Share ($)</div>
+            <canvas id="rfmChart"></canvas>
+        </div>
+    </div>
+
+    <!-- FINDINGS -->
+    <div class="findings-card">
+        <div class="chart-title">Key Executive Findings & Recommendations</div>
+        <ul>
+            <li><strong>Discount Cap Recommendation:</strong> Discounts between 0%–20% generate healthy 29.3%–40.0% profit margins. Discounts >60% incurred <strong>-$1.55M in net losses (-137.1% margin)</strong>. Enforce a 20% discount cap.</li>
+            <li><strong>Top Product Category:</strong> Technology Copiers in the South & West regions represent the single largest revenue driver ($1.14M+ per region).</li>
+            <li><strong>Customer Churn:</strong> Over 73% of historical customers have reached inactive churn status (>180 days since last order). Target At-Risk customers with automated re-engagement offers.</li>
+        </ul>
+    </div>
+
+    <script>
+        // Discount Chart
+        const ctxDiscount = document.getElementById('discountChart').getContext('2d');
+        new Chart(ctxDiscount, {
+            type: 'bar',
+            data: {
+                labels: ['0% (No Discount)', '1-20% (Low)', '21-40% (Mod)', '41-60% (High)', '>60% (Clearance)'],
+                datasets: [{
+                    label: 'Profit Margin %',
+                    data: [40.0, 29.34, 7.94, -20.00, -137.11],
+                    backgroundColor: ['#4ade80', '#38bdf8', '#fbbf24', '#f87171', '#ef4444']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: { y: { grid: { color: '#334155' } }, x: { grid: { color: '#334155' } } }
+            }
+        });
+
+        // RFM Chart
+        const ctxRfm = document.getElementById('rfmChart').getContext('2d');
+        new Chart(ctxRfm, {
+            type: 'doughnut',
+            data: {
+                labels: ['At Risk ($7.33M)', 'Champions ($3.75M)', 'Loyal ($3.06M)', 'Lost ($2.44M)', 'Promising ($1.53M)'],
+                datasets: [{
+                    data: [7.33, 3.75, 3.06, 2.44, 1.53],
+                    backgroundColor: ['#c084fc', '#38bdf8', '#4ade80', '#f87171', '#fbbf24']
+                }]
+            },
+            options: { responsive: true }
+        });
+    </script>
+</body>
+</html>
